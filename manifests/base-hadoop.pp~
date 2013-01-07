@@ -8,6 +8,11 @@ exec { 'apt-get update':
  command => '/usr/bin/apt-get update',
 }
 
+exec { 'create-dot-ssh':
+ command => '/bin/sh -c "[ -d /root/.ssh ] || sudo mkdir /root/.ssh"',
+}
+
+
 package { "openjdk-6-jdk" :
  ensure => "present",
  require => Exec['apt-get update']
@@ -19,7 +24,7 @@ file {
   mode => 600,
   owner => root,
   group => root,
-  require => Exec['apt-get update']
+  require => Exec['create-dot-ssh']
  }
  
 file {
@@ -28,7 +33,7 @@ file {
   mode => 644,
   owner => root,
   group => root,
-  require => Exec['apt-get update']
+  require => Exec['create-dot-ssh']
  }
 
 ssh_authorized_key { "ssh_key":
