@@ -1,4 +1,3 @@
-
 include "hadoop"
 
 group { "puppet":
@@ -6,12 +5,12 @@ group { "puppet":
 }
 
 exec { 'apt-get update':
-    command => 'apt-get update',
+ command => '/usr/bin/apt-get update',
 }
 
 package { "openjdk-6-jdk" :
-   ensure => present
-  require => Exec['apt-get update']
+ ensure => "present",
+ require => Exec['apt-get update']
 }
 
 file {
@@ -34,7 +33,7 @@ file {
 
 ssh_authorized_key { "ssh_key":
     ensure => "present",
-    key    => "AAAAB3NzaC1yc2EAAAADAQABAAABAQCeHdBPVGuSPVOO+n94j/Y5f8VKGIAzjaDe30hu9BPetA+CGFpszw4nDkhyRtW5J9zhGKuzmcCqITTuM6BGpHax9ZKP7lRRjG8Lh380sCGA/691EjSVmR8krLvGZIQxeyHKpDBLEmcpJBB5yoSyuFpK+4RhmJLf7ImZA7mtxhgdPGhe6crUYRbLukNgv61utB/hbre9tgNX2giEurBsj9CI5yhPPNgq6iP8ZBOyCXgUNf37bAe7AjQUMV5G6JMZ1clEeNPN+Uy5Yrfojrx3wHfG40NuxuMrFIQo5qCYa3q9/SVOxsJILWt+hZ2bbxdGcQOd9AXYFNNowPayY0BdAkSr",
+    key    => "AAAAB3NzaC1yc2EAAAADAQABAAABAQC3ntqwB6V6hl8ieUI0apcfVEPBQr5TOvthGDwYitgx8qjms96OgtVl3FssZ+YIlm8YbiUQ+CWFe5rijdrY7h42atzPcRz5/IH+RjOrXK9jd8K8wPTMQZUi8t6qKTzm8FwIkdWdz5nP9cjuSYYJwwwoeQw9fLY/Vm3jM0oXKPXI9keG0xd6O58S63Y/17tT6kDgKyZq0IvDO2q3I2ctFKfB3PnQKnVsay9ywUAhgbFuJy8HFq1pcENfY7hsnpHUrJR3YzJ7ac7gnSRJecpd2aPBVJlHj1SLhG8iWPBe6jRmwcBOQnsIPT1zWgPp/47N5l8xYAhsBOPYbSJ3Ko4vg953",
     type   => "ssh-rsa",
     user   => "root",
     require => File['/root/.ssh/id_rsa.pub']
